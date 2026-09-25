@@ -1,21 +1,26 @@
 import streamlit as st
+from src.ui.sidebar import render_sidebar
 
 st.set_page_config(
     page_title="Stock Prediction System",
-    page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-st.title("Welcome to the Stock Prediction System")
+# Global Sidebar
+render_sidebar()
 
-st.markdown("""
-This is an academic machine-learning application designed to forecast the **Next Trading Day's Closing Price** using historical market data.
+# Page Registration
+pages = [
+    st.Page("pages/dashboard.py", title="Dashboard", icon="📊"),
+    st.Page("pages/stock_analysis.py", title="Stock Analysis", icon="📉"),
+    st.Page("pages/model_analysis.py", title="Model Analysis", icon="🤖"),
+    st.Page("pages/about.py", title="About", icon="ℹ️"),
+    st.Page("pages/terms.py", title="Terms & Disclaimer", icon="⚖️"),
+]
 
-Please use the sidebar to navigate through the application:
-- **Dashboard**: Search for stocks, view latest predictions and charts.
-- **Stock Analysis**: Deep dive into historical price action.
-- **Model Analysis**: Review machine learning metrics and cross-validation results.
-- **About**: Learn about the project architecture and ML methodology.
-- **Disclaimer / Terms**: Read the terms of use.
-""")
+# Primary Router
+pg = st.navigation(pages)
+
+# Execute Active Page
+pg.run()
