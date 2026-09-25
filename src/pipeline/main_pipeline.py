@@ -6,7 +6,6 @@ from src.models.trainer import split_data_chronologically, train_models
 from src.models.evaluator import evaluate_models
 from src.models.selector import select_best_model
 from src.prediction.predictor import extract_latest_features_for_prediction, predict_next_day
-
 def execute_prediction_pipeline(ticker: str):
     """
     Executes the entire end-to-end ML pipeline and stores the results globally in st.session_state.
@@ -22,8 +21,6 @@ def execute_prediction_pipeline(ticker: str):
         best_model_name = select_best_model(evaluation_results)
         latest_features, latest_close = extract_latest_features_for_prediction(df_raw)
         prediction = predict_next_day(trained_pipeline[best_model_name], latest_features, latest_close, stock_info.native_currency)
-        
-        # Store all results globally
         st.session_state['df_raw'] = df_raw
         st.session_state['stock_info'] = stock_info
         st.session_state['evaluation_results'] = evaluation_results

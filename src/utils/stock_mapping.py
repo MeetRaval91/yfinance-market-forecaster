@@ -1,6 +1,3 @@
-# A static mapping of supported stocks for search suggestions
-# This prevents calling Yahoo finance on every keystroke.
-
 SUPPORTED_STOCKS = {
     "Apple Inc. (AAPL)": "AAPL",
     "Microsoft Corp. (MSFT)": "MSFT",

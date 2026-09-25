@@ -1,6 +1,5 @@
 import streamlit as st
 import altair as alt
-
 def render_empty_state(message: str = "No Stock Selected", sub_message: str = "Search for a company or ticker in the sidebar to begin analysis."):
     """Renders a visually balanced empty state when no data is active."""
     st.markdown(f"""
@@ -9,7 +8,6 @@ def render_empty_state(message: str = "No Stock Selected", sub_message: str = "S
         <p style="color: #64748B;">{sub_message}</p>
     </div>
     """, unsafe_allow_html=True)
-
 def apply_chart_theme(chart: alt.Chart, title: str = "") -> alt.Chart:
     """
     Applies consistent styling to Altair charts to match the global UI aesthetic.
@@ -17,7 +15,6 @@ def apply_chart_theme(chart: alt.Chart, title: str = "") -> alt.Chart:
     props = {"width": "container"}
     if title:
         props["title"] = title
-        
     return chart.properties(
         **props
     ).configure_title(
@@ -35,35 +32,30 @@ def apply_chart_theme(chart: alt.Chart, title: str = "") -> alt.Chart:
     ).configure_view(
         strokeWidth=0
     )
-
 def render_prediction_metric(label: str, value: float, change: float = None, pct_change: float = None, symbol: str = ""):
     """
     Renders a custom metric card that strictly controls the change indicator styling
     without relying on Streamlit's automatic delta parsing.
     """
     value_str = f"{symbol}{value:,.2f}"
-    
     if change is None or pct_change is None:
-        delta_str = "&nbsp;" # Empty space to maintain vertical alignment
+        delta_str = "&nbsp;"                                             
         color = "transparent"
     else:
         abs_change = abs(change)
-        
         if change > 0:
-            color = "#16a34a" # green
+            color = "#16a34a"        
             arrow = "↑"
             pct_str = f"(+{pct_change:.2f}%)"
         elif change < 0:
-            color = "#dc2626" # red
+            color = "#dc2626"      
             arrow = "↓"
             pct_str = f"({pct_change:.2f}%)"
         else:
-            color = "#64748b" # neutral
+            color = "#64748b"          
             arrow = "→"
             pct_str = "(0.00%)"
-            
         delta_str = f"{arrow} {symbol}{abs_change:,.2f} {pct_str}"
-    
     st.markdown(f"""
     <div style="padding: 0.5rem 0;">
         <div style="font-size: 0.875rem; color: #64748B; margin-bottom: 0.25rem;">{label}</div>
@@ -71,21 +63,19 @@ def render_prediction_metric(label: str, value: float, change: float = None, pct
         <div style="font-size: 0.875rem; font-weight: 500; color: {color}; margin-top: 0.25rem;">{delta_str}</div>
     </div>
     """, unsafe_allow_html=True)
-
 def render_direction_metric(label: str, direction: str):
     """
     Renders a custom metric card for Expected Direction with appropriate semantic coloring.
     """
     if direction.upper() == "UP":
-        color = "#16a34a" # green
+        color = "#16a34a"        
         arrow = "↑"
     elif direction.upper() == "DOWN":
-        color = "#dc2626" # red
+        color = "#dc2626"      
         arrow = "↓"
     else:
-        color = "#64748b" # neutral
+        color = "#64748b"          
         arrow = "→"
-        
     st.markdown(f"""
     <div style="padding: 0.5rem 0;">
         <div style="font-size: 0.875rem; color: #64748B; margin-bottom: 0.25rem;">{label}</div>
